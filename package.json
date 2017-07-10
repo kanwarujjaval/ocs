@@ -4,16 +4,26 @@
   "description": "ocs server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
+  },
+  "engines": {
+    "node": ">=8.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kanwarujjaval/ocs.git"
   },
-  "author": "",
+  "author": "VS",
   "license": "AGPL-3.0",
+  "contributors": [
+    "Kanwar Ujjaval Singh",
+    "Priskhit Tekta"
+  ],
   "bugs": {
     "url": "https://github.com/kanwarujjaval/ocs/issues"
   },
-  "homepage": "https://github.com/kanwarujjaval/ocs#readme"
+  "homepage": "https://github.com/kanwarujjaval/ocs#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
 }
