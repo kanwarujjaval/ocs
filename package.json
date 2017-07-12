@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/kanwarujjaval/ocs#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "mysql": "^2.13.0"
   }
 }
