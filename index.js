@@ -1,13 +1,18 @@
-const express = require('express');
-const Loader = require('./loader');
+const env     = process.env.NODE_ENV || "development";
 
-const app = new express();
-let loader = new Loader(app, true, null);
+const express = require('express');
+const Loader  = require('./loader');
+const Config  = require('./config');
+
+const app     = new express();
+let loader    = new Loader(app, true, null);
+global.config = new Config(env);
 
 (async () => {
-    await app.listen(3000);
+    let port = config.httpPort;
+    await app.listen(port);
     loader.apply();
-    console.info('OCS Server started on port 3000');
+    console.info('OCS Server started on port', port);
 
     //_start demonstration for the loader class
     setTimeout(() => {
