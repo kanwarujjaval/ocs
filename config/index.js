@@ -1,6 +1,6 @@
 const Util = require('./../utils');
 let server = require('./server');
-let db     = require('./db');
+let mysql  = require('./mysql');
 
 /** Config class for global Configs */
 class Config {
@@ -12,7 +12,7 @@ class Config {
     constructor(env){
         this._env   = env;
         this.SERVER = server(this._env);
-        this.DB     = db(this._env);
+        this.MYSQL  = mysql(this._env);
     }
 
     /**
@@ -22,7 +22,7 @@ class Config {
         let server  = Util.hotRequire('./server');
         let db      = Util.hotRequire('./db');
         this.SERVER = server(this._env);
-        this.DB     = db(this._env);
+        this.MYSQL  = mysql(this._env);
     }
 }
 

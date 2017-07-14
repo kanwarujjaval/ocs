@@ -14,15 +14,22 @@ class Sample {
      * @param {Object} res express response object
      * @return {Function} response function call
      * */
-    getSample(req, res) {
-        return res.send(1 + this.foo + '')
+    async getSample(req, res) {
+        let query  = 'SELECT * FROM `books` WHERE `author` = ?';
+        let values = ['David'];
+        let result = await req.sql({
+            sql     : query,
+            timeout : 40 * 1000,
+            values  : values
+        });
+        return res.send(result);
     }
 
     /**
      * Validate GET sample method input
      * @returns {function} next/response for validation success/failure
      * */
-    getSampleValidator(req, res, next) {
+    async getSampleValidator(req, res, next) {
         /*
         sample validation
         (
@@ -76,8 +83,15 @@ class Sample {
      * @param {Object} res express response object
      * @return {Function} response function call
      * */
-    postSample(req, res) {
-        return res.send(1 + this.foo + '')
+    async postSample(req, res) {
+        let query  = 'SELECT * FROM `books` WHERE `author` = ?';
+        let values = ['David'];
+        let result = await req.sql({
+            sql     : query,
+            timeout : 40 * 1000,
+            values  : values
+        });
+        return res.send(result);
     }
 }
 
