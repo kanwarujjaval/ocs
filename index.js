@@ -9,7 +9,7 @@ let loader    = new Loader(app, true, null);
 global.config = new Config(env);
 
 (async () => {
-    let port = config.httpPort;
+    let port = config.getServerConfig().SERVER.httpPort;
     await app.listen(port);
     loader.apply();
     console.info('OCS Server started on port', port);

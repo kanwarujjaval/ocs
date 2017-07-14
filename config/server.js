@@ -8,9 +8,8 @@ const serverConfig = {
     }
 }
 
-let Server = (Base) => class extends Base {
+class Server {
     constructor(env){
-        super(env);
         this.httpPort = serverConfig[env] ? serverConfig[env].HTTP_PORT : defaultConfig.HTTP_PORT;
     }
 }

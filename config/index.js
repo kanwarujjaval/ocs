@@ -2,12 +2,22 @@
 var Server = require('./server');
 var Db     = require('./db');
 
-class CommonConfig {
+class Config {
     constructor(env){
         this._env = env;
     }
-}
 
-class Config extends Server(Db(CommonConfig)){}
+    getServerConfig(){
+        return {        
+            SERVER : new Server(this._env),
+        }
+    }
+
+    getDbConfig(){
+        return {
+            DB : new Db(this._env),
+        }
+    }
+}
 
 module.exports = Config;

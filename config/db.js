@@ -16,9 +16,8 @@ const serverConfig = {
     }
 }
 
-let Db = (Base) => class extends Base {
+class Db {
     constructor(env){
-        super();
         this.host            = serverConfig[env] ? serverConfig[env].HOST : defaultConfig.HOST; 
         this.user            = serverConfig[env] ? serverConfig[env].USER : defaultConfig.USER; 
         this.pass            = serverConfig[env] ? serverConfig[env].PASS : defaultConfig.PASS; 
