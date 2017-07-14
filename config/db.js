@@ -1,29 +1,36 @@
-const defaultConfig = {
-    HOST                :   "localhost",
-    USER                :   "ocs-admin",
-    PASS                :   "blackdog",
-    DATABASE            :   "ocs",
-    CONNECTION_LIMIT    :   10,    
-}
+const common = {
+    HOST                :   process.env.MYSQL_HOST          || 'localhost',
+    USER                :   process.env.MYSQL_USER          || 'user',
+    PASS                :   process.env.MYSQL_PASS          || 'password',
+    DATABASE            :   process.env.MYSQL_DB            || 'OCS',
+    CHARSET             :   'utf8mb4',
+};
 
-const serverConfig = {
-    production : {
-        HOST                :   "",
-        USER                :   "",
-        PASS                :   "",
-        DATABASE            :   "ocs",
-        CONNECTION_LIMIT    :   10,        
+const specific = {
+    development: {
+        CONNECTION_LIMIT    :   2,
+        TRACE               :   true,
+        DEBUG               :   ['ComQueryPacket', 'ResultSetHeaderPacket']
+    },
+    testing: {
+        CONNECTION_LIMIT    :   4,
+        TRACE               :   true,
+        DEBUG               :   ['ComQueryPacket', 'ResultSetHeaderPacket']
+    },
+    staging: {
+        CONNECTION_LIMIT    :   8,
+        TRACE               :   true,
+        DEBUG               :   ['ComQueryPacket', 'ResultSetHeaderPacket']
+    },
+    production: {
+        CONNECTION_LIMIT    :   12,
+        TRACE               :   false,
+        DEBUG               :   false
     }
-}
+};
 
-class Db {
-    constructor(env){
-        this.host            = serverConfig[env] ? serverConfig[env].HOST : defaultConfig.HOST; 
-        this.user            = serverConfig[env] ? serverConfig[env].USER : defaultConfig.USER; 
-        this.pass            = serverConfig[env] ? serverConfig[env].PASS : defaultConfig.PASS; 
-        this.database        = serverConfig[env] ? serverConfig[env].DATABASE : defaultConfig.DATABASE; 
-        this.connectionLimit = serverConfig[env] ? serverConfig[env].CONNECTION_LIMIT : defaultConfig.CONNECTION_LIMIT; 
-    }
-}
+const config = (ENV) => {
+    return Object.assign(specific[ENV], common);
+};
 
-module.exports = Db;
+module.exports = config;

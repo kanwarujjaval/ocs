@@ -1,15 +1,15 @@
-const env     = process.env.NODE_ENV || "development";
-
-const express = require('express');
+const Express = require('express');
 const Loader  = require('./loader');
 const Config  = require('./config');
 
-const app     = new express();
-let loader    = new Loader(app, true, null);
-global.config = new Config(env);
+const ENV     = process.env.NODE_ENV || "development";
+
+const app     = new Express();
+const loader  = new Loader(app, true, null);
+const config  = new Config(ENV);
 
 (async () => {
-    let port = config.getServerConfig().SERVER.httpPort;
+    let port = config.SERVER.PORT;
     await app.listen(port);
     loader.apply();
     console.info('OCS Server started on port', port);

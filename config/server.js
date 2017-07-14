@@ -1,17 +1,24 @@
-const defaultConfig = {
-    HTTP_PORT : 3000
-}
+const os            = require('os');
+const INSTANCE_ID   = process.env.INSTANCE_ID || 0;
+const PROCESSORS    = os.cpus().length;
+const HOSTNAME      = os.hostname();
 
-const serverConfig = {
-    production : {
-        HTTP_PORT : 3001
-    }
-}
+const common = {
+    INSTANCE_ID : INSTANCE_ID,
+    PORT        : 3000 + parseInt(INSTANCE_ID),
+    PROCESSORS  : PROCESSORS,
+    HOSTNAME    : HOSTNAME
+};
 
-class Server {
-    constructor(env){
-        this.httpPort = serverConfig[env] ? serverConfig[env].HTTP_PORT : defaultConfig.HTTP_PORT;
-    }
-}
+const specific = {
+    development : {},
+    testing     : {},
+    staging     : {},
+    production  : {}
+};
 
-module.exports = Server;
+const config = (ENV) => {
+    return Object.assign(specific[ENV], common);
+};
+
+module.exports = config;
