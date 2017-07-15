@@ -16,6 +16,10 @@ class Database {
         this._config  = config;
     }
 
+    /**
+     * create a new Pool
+     * @returns {function} that returns Mysql Pool
+     */
     _mysqlPool() {
         return () =>{
             let config = this._config.MYSQL;
@@ -33,6 +37,10 @@ class Database {
         }
     };
 
+    /**
+     * Get a connection from Mysql Pool
+     * @returns {function} that returns connection from pool with attached bluebird disposer
+     */
     _getMysqlConnection() {
         return ()=> {
             return this._mysqlPool()().getConnectionAsync().disposer((connection) => {
@@ -41,6 +49,10 @@ class Database {
         }
     };
 
+    /**
+     * Run a query on Mysql Connection
+     * @returns {function} that returns query function with attached blubird using property to call disposer on use end.
+     */
     _mysqlQuery(command) {
         return (command) => {
             return Bluebird.using(this._getMysqlConnection()(), (connection) => {
@@ -49,6 +61,10 @@ class Database {
         }
     };
 
+    /**
+     * Middleware for Mysql Query Function
+     * @returns {function} that attaches a 'sql' function to request object which runs queries on Mysql
+     */
     mysqlBootstrap() {
         return (req, res, next) => {
             req.sql = (() => {
@@ -64,6 +80,7 @@ module.exports = Database;
 
 /*
 
+Possible usage for transaction if needed
 
  function withTransaction(fn) {
  return Bluebird.using(pool.acquireConnection(), function(connection) {
@@ -89,8 +106,5 @@ withTransaction(function(tx) {
         return tx.queryAsync(...)
     });
 });
-
-
-
 
  */
