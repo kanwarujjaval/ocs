@@ -25,13 +25,23 @@ class Loader {
     }
 
     /**
+     * prefix module name to each api path
+     */
+    _fixPath(module, moduleName){
+        module = module.forEach((api)=>{
+            api.path = '/' + moduleName + api.path;
+        });
+        return module;
+    }
+
+    /**
      * Load all modules to app
      */
-
     populateModules() {
         let moduleDirs = fs.readdirSync(MODULE_DIR);
         moduleDirs.forEach((module) => {
             let curModule = require('./../modules/' + module);
+            this._fixPath(curModule, module);
             this.modules.push(curModule);
         });
         this.loadModules();

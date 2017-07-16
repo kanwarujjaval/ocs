@@ -17,7 +17,7 @@ let sample = new Sample();
 
 module.exports = [
     {
-        path: '/sample/1',
+        path: '/',
         method: 'GET',
         auth: true,
         roles: sample.getSampleRoles(),
@@ -29,7 +29,7 @@ module.exports = [
         }
     },
     {
-        path: '/sample/1',
+        path: '/',
         method: 'POST',
         auth: true,
         roles: sample.postSampleRoles(),
