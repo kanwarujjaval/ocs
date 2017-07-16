@@ -15,14 +15,17 @@ class Sample {
      * @return {Function} response function call
      * */
     async getSample(req, res) {
-        let query  = 'SELECT * FROM `books` WHERE `author` = ?';
-        let values = ['David'];
-        let result = await req.sql({
-            sql     : query,
-            timeout : 40 * 1000,
-            values  : values
-        });
-        return res.send(result);
+        // mysql usage
+
+        // let query  = 'SELECT * FROM `books` WHERE `author` = ?';
+        // let values = ['David'];
+        // let result = await req.sql({
+        //     sql     : query,
+        //     timeout : 40 * 1000,
+        //     values  : values
+        // });
+
+        return res.send('result');
     }
 
     /**

@@ -1,6 +1,7 @@
 const Util = require('./../utils');
 let server = require('./server');
 let mysql  = require('./mysql');
+let mongo  = require('./mongo');
 
 /** Config class for global Configs */
 class Config {
@@ -13,6 +14,7 @@ class Config {
         this._env   = env;
         this.SERVER = server(this._env);
         this.MYSQL  = mysql(this._env);
+        this.MONGO  = mongo(this._env);
     }
 
     /**
@@ -20,9 +22,13 @@ class Config {
      */
     reloadConfig(){
         let server  = Util.hotRequire('./server');
-        let db      = Util.hotRequire('./db');
         this.SERVER = server(this._env);
+
+        let mysql   = Util.hotRequire('./mysql');
         this.MYSQL  = mysql(this._env);
+
+        let mongo   = Util.hotRequire('./mongo');
+        this.MONGO  = mysql(this._env);
     }
 }
 

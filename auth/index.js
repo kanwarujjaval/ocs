@@ -1,3 +1,5 @@
+const jsonwebtoken = require('jsonwebtoken');
+
 /** Main Auth class for Authentication */
 class Auth {
 
@@ -7,6 +9,18 @@ class Auth {
      */
     constructor(config){
         this._config  = config;
+    }
+
+    authenticate(){
+
+    }
+
+    serialize(){
+
+    }
+
+    deserialize(){
+
     }
 }
 
