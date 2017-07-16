@@ -27,7 +27,7 @@ class MongoConnection {
         };
         Mongoose.Promise = Bluebird;
         if (config.DEBUG) Mongoose.set('debug', true);
-        Mongoose.createConnection(uri, options)
+        Mongoose.connect(uri, options)
             .then((err)=>{
                 console.info('Connection to MongoDB established');
             })
