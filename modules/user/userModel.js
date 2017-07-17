@@ -4,6 +4,7 @@ const userSchema = new Schema({
   name        :   String,
   phoneNo     :   { type : String, required : true , index : true, unique : true},
   email       :   { type : String, required : true , index : true, unique : true},
+  address     :   String,
   role        :   ['string']
 },{
     timestamps : true

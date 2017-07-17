@@ -1,16 +1,23 @@
-const Express = require('express');
-const Loader  = require('./loader');
-const Config  = require('./config');
-const Mongo   = require('./db/mongo');
+const Express       = require('express');
+const Loader        = require('./loader');
+const Config        = require('./config');
+const Mongo         = require('./db/mongo');
+const bodyParser    = require('body-parser'); 
 
-const ENV     = process.env.NODE_ENV || "development";
+const ENV           = process.env.NODE_ENV || "development";
 
-const app     = new Express();
-const loader  = new Loader(app, true, null);
-const config  = new Config(ENV);
-const mongo   = new Mongo(config);
+const app           = new Express();
+const loader        = new Loader(app, true, null);
+const config        = new Config(ENV);
+const mongo         = new Mongo(config);
 
 (async () => {
+    /* middlewares */ 
+    app.use(require('morgan')('dev'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    /*  */
+
     let port = config.SERVER.PORT;
     await app.listen(port);
     loader.apply();
