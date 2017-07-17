@@ -1,4 +1,5 @@
 const fs = require('fs');
+const bodyParser = require('body-parser'); 
 const Util = require('./../utils');
 let MODULE_DIR = './modules/';
 let API_PREFIX = '';
@@ -14,6 +15,7 @@ class Loader {
      */
 
     constructor(app, init, moduleName) {
+        this._setupExpress(app);        
         if (!init && !moduleName)
             throw new Error('Invalid initialization');
         this._init = init;
@@ -24,6 +26,11 @@ class Loader {
         this.modules = [];
     }
 
+    _setupExpress(app){
+        app.use(require('morgan')('dev'));
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: false }));
+    }
     /**
      * prefix module name to each api path
      */
