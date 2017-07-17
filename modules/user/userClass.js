@@ -13,6 +13,10 @@ class User {
         let userData = await userModel.find({});
         return res.send(userData);
     }
+
+    async postUser(req, res){
+        
+    }
 }
 
 module.exports = User;

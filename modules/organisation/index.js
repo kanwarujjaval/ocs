@@ -1,8 +1,8 @@
-const User  = require('./userClass');
-let user    = new User();
+const Organisation  = require('./organisationClass');
+let organisation    = new Organisation();
 
 /**
- * @module User
+ * @module Organisation
  * Sample module index expose
  * @exports {Array)
  *
@@ -25,19 +25,7 @@ module.exports = [
             return 
         },
         handler: (req, res) => {
-            return user.postUser(req, res);
-        }
-    },
-    {
-        path: '/',
-        method: 'GET',
-        auth: false,
-        roles: '',
-        validate: () => {
-            return 
-        },
-        handler: (req, res) => {
-            return user.getUserData(req, res);
+            return organisation.postOrganisation(req, res);
         }
     }
 ];
