@@ -8,7 +8,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            user.postUser(req, res)
+            return user.postUser(req, res)
         }
     },
     {

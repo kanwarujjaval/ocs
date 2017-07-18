@@ -5,19 +5,12 @@ class Organisation {
     /**
      * Function to save the organisation in db
      * 
-     * @param {any} organisation 
+     * @param {Object} data
      * @returns 
      * @memberof Organisation
      */
-    async saveOrganisation(data) {
-        return new Promise((resolve, reject) => {
-            let organisation = new OrganisationModel(data);
-            organisation.save().then((result) => {
-                return resolve(result);
-            }).catch((error) => {
-                return reject(error);
-            });
-        })
+    saveOrganisation(data) {
+            return new OrganisationModel(data).save();
     };
 }
 

@@ -1,7 +1,6 @@
 const UserModel         = require('./userModel');
-
 const OrganisationClass = require('../organisation/organisationClass');
-const Util              = require('./../../utils')
+const Util              = require('./../../utils');
 
 /** User module class */
 class User {
@@ -9,25 +8,20 @@ class User {
     /**
      * SAVE users end point
      * 
-     * @param {any} req 
-     * @param {any} res 
+     * @param {Object} req
+     * @param {Object} res
      * @memberof User
      */
     async postUser(req, res) {
         try {
-
             let data = req.body;
+            let result = null;
 
-            let parallelTasks = [
-                this.saveUser.bind(null, data)
-            ];
+            // TODO : implement auth check
+            let organisation = new OrganisationClass();
 
-            if (!req.body.isAuthenticated) {
-                let organisation = new OrganisationClass();
-                parallelTasks.push(organisation.saveOrganisation.bind(null, data));
-            }
-
-            let result = await Util.runTasksInParallel(parallelTasks);
+            organisation.saveOrganisation(data).catch(Util.silentErrorHandler);
+            this._saveUser(data).catch(Util.silentErrorHandler);
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);
@@ -41,8 +35,8 @@ class User {
     /**
      * GET user end point
      * 
-     * @param {any} req 
-     * @param {any} res 
+     * @param {Object} req
+     * @param {Object} res
      * @returns 
      * @memberof User
      */
@@ -65,36 +59,25 @@ class User {
     /**
      * Function to save the user in db
      * 
-     * @param {any} user 
+     * @param {Object} data
      * @returns 
      * @memberof User
      */
-    async saveUser(data) {
-        return new Promise((resolve, reject) => {
-            let user = new UserModel(data);
-            user.save().then((result) => {
-                return resolve(result);
-            }).catch((error) => {
-                return reject(error);
-            });
-        })
+    _saveUser(data) {
+        return new UserModel(data).save();
     };
 
     /**
      * Function to fetch the user from db
      * 
-     * @param {any} data 
-     * @returns 
+     * @param {Object} criteria object with key value pair for fetch user query
+     * @param {Number} limit
+     * @param {Number} skip
+     * @returns {array}
      * @memberof User
      */
-    async fetchUser(data) {
-        return new Promise((resolve, reject) => {
-            UserModel.find({ phoneNo : data.phoneNo}).exec().then((result) => {
-                return resolve(result);
-            }).catch((error) => {
-                return reject(error);
-            });
-        })
+    static fetchUser(criteria, limit, skip) {
+            return UserModel.find(criteria).limit(limit).skip(skip);
     };
 }
 
