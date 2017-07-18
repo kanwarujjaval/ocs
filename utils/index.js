@@ -31,17 +31,30 @@ class Util {
         return _method
     }
 
+    /**
+     * TODO Documentation
+     * @param parallelTasks
+     * @returns {Promise}
+     */
     static runTasksInParallel(parallelTasks) {
-        return new Promise((resolve, reject) => {
-            Promise.all(parallelTasks.map((task) => { return task(); })).then((result) => {
-                return resolve(result);
-            }).catch ((error) => {
-                console.log(error.message);
-                return reject(error);
-            })
+            return new Promise((resolve, reject) => {
+            Promise.all(parallelTasks.map((task) => {
+                return task();
+            }))
+                .then((result) => {
+                    return resolve(result);
+                })
+                .catch((error) => {
+                    return reject(error);
+                })
         })
     }
 
+    /**
+     * TODO Documentation
+     * @param e
+     * @returns {{status: number, message: string, data: {}}}
+     */
     static errorHandler(e) {
         let status = 500;
         let message = "Internal Server Error";
@@ -50,31 +63,41 @@ class Util {
         if (e.message) {
             //error has message
             message = e.message; //or any operation on message
-        } else if (err.errCode) {
+        } else if (e.errCode) {
             //mongo error
-            if (e.errCode == 1)
+            if (e.errCode === 1)
                 e.message = '1 error'
         }
 
         //run reporters?
-
-        let response = {
+        return {
             status: status,
             message: message,
             data: data
         };
-        return response;
     }
 
+    /**
+     * TODO Documentation
+     * @param data
+     * @returns {{status: number, message: string, data: *}}
+     */
     static successHandler(data) {
         let status = 200;
         let message = "Success";
-        let response = {
+        return {
             status: status,
             message: message,
             data: data
         };
-        return response;
+    }
+
+    /**
+     * TODO Documentation
+     * @param e
+     */
+    static silentErrorHandler(e){
+        //TODO Documentation
     }
 }
 
