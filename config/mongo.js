@@ -9,7 +9,7 @@ const common = {
 const specific = {
     development: {
         POOL_SIZE           : 2,
-        DEBUG               : false
+        DEBUG               : true
     },
     testing: {
         POOL_SIZE           : 4,

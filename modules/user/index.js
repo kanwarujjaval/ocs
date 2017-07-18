@@ -17,7 +17,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            return
+            return user.getUser(req, res)
         }
     }
 ];
