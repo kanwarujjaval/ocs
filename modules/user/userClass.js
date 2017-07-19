@@ -1,12 +1,14 @@
-const UserModel         = require('./userModel');
-const OrganisationClass = require('../organisation/organisationClass');
-const Util              = require('./../../utils');
+const UserModel = require('./userModel');
+const Util = require('./../../utils');
+const PostUserHelper = require('./helper/postUser');
+const FetchUserHelper = require('./helper/fetchUser');
+const PostOrganisationHelper = require('../organisation/helper/postOrganisation');
 
 /** User module class */
 class User {
 
     /**
-     * SAVE users end point
+     * POST users end point
      * 
      * @param {Object} req
      * @param {Object} res
@@ -18,10 +20,8 @@ class User {
             let result = null;
 
             // TODO : implement auth check
-            let organisation = new OrganisationClass();
-
-            organisation.saveOrganisation(data).catch(Util.silentErrorHandler);
-            this._saveUser(data).catch(Util.silentErrorHandler);
+            PostOrganisationHelper._saveOrganisation(data).catch(Util.silentErrorHandler);
+            PostUserHelper._saveUser(data).catch(Util.silentErrorHandler);
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);
@@ -45,7 +45,7 @@ class User {
 
             let data = req.query;
 
-            let result = await this.fetchUser(data);
+            let result = await FetchUserHelper._fetchUser(data);
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);
@@ -55,30 +55,6 @@ class User {
             return res.status(result.status).send(result);
         }
     }
-
-    /**
-     * Function to save the user in db
-     * 
-     * @param {Object} data
-     * @returns 
-     * @memberof User
-     */
-    _saveUser(data) {
-        return new UserModel(data).save();
-    };
-
-    /**
-     * Function to fetch the user from db
-     * 
-     * @param {Object} criteria object with key value pair for fetch user query
-     * @param {Number} limit
-     * @param {Number} skip
-     * @returns {array}
-     * @memberof User
-     */
-    static fetchUser(criteria, limit, skip) {
-            return UserModel.find(criteria).limit(limit).skip(skip);
-    };
 }
 
 module.exports = User;
