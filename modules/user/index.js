@@ -1,5 +1,5 @@
-const User  = require('./userClass');
-let user    = new User();
+const User = require('./userClass');
+let user = new User();
 
 module.exports = [
     {
@@ -18,6 +18,15 @@ module.exports = [
         roles: [],
         handler: (req, res) => {
             return user.getUser(req, res)
+        }
+    },
+    {
+        path: '/',
+        method: 'PUT',
+        auth: false,
+        roles: [],
+        handler: (req, res) => {
+            return user.updateUser(req, res)
         }
     }
 ];

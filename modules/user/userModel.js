@@ -1,22 +1,25 @@
 const Schema = Mongoose.Schema;
+const validRoles = ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'];
 
 const userSchema = new Schema({
   name        :   String,
   phoneNo     :   { type : String, required : true , index : true, unique : true},
   email       :   { type : String, required : true , index : true, unique : true},
   address     :   String,
-  role        : [{
-        type: String,
+  role        : {
+        type: [String],
         validate: {
-            isAsync: false,
-            validator:  (v) => {
-                return v.length > 0;
+            validator: function (v) {
+                let isValid = 1;
+                v.map((role)=>{
+                   isValid *= validRoles.indexOf(role) > 0 ? 1 : 0;
+                })
+                return v.length > 0 && isValid;
             },
-            message: 'Atleast 1 role is required'
+            message: `Invalid Role`
         },
-        enum : ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'],
         required: [true, 'User\'s role is required']
-    }]
+    }
 },{
     timestamps : true
 });
