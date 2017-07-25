@@ -2,10 +2,14 @@ const Schema = Mongoose.Schema;
 const validRoles = ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'];
 
 const userSchema = new Schema({
-  name        :   String,
+  firstName   :   { type : String, required : true },
+  middleName  :   { type : String },
+  lastName    :   { type : String, required : true },
   phoneNo     :   { type : String, required : true , index : true, unique : true},
   email       :   { type : String, required : true , index : true, unique : true},
   address     :   String,
+  city        :   { type : String, required : true },
+  country     :   { type : String, required : true },
   role        : {
         type: [String],
         validate: {

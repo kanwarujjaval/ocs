@@ -2,6 +2,7 @@ const Schema = Mongoose.Schema;
 
 const batchSchema = new Schema({
   name        :   { type : String },
+  sections    :   [String]
 }, {
     timestamps : true
 });
