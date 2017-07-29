@@ -3,6 +3,7 @@ const Loader        = require('./loader');
 const Config        = require('./config');
 const Mongo         = require('./db/mongo');
 const bodyParser    = require('body-parser'); 
+const Auth          = require('./auth');
 
 const ENV           = process.env.NODE_ENV || "development";
 
@@ -10,19 +11,18 @@ const app           = new Express();
 const loader        = new Loader(app, true, null);
 const config        = new Config(ENV);
 const mongo         = new Mongo(config);
+const auth          = new Auth(config);
 
 (async () => {
     /* middlewares */ 
     app.use(require('morgan')('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    /*  */
 
     let port = config.SERVER.PORT;
     await app.listen(port);
-    loader.apply();
+    loader.apply(auth);
     console.info('OCS Server started on port', port);
-
 
     // app.use(mysql.bootstrap());  //adds req.mysql
     //_start demonstration for the loader class

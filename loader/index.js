@@ -12,7 +12,7 @@ class Loader {
      * @param {Boolean} init - initialize all modules?.
      * @param {String} moduleName - Single module to load if init = false.
      */
-    constructor(app, init, moduleName) {        
+    constructor(app, init, moduleName) {
         if (!init && !moduleName)
             throw new Error('Invalid initialization');
         this._init = init;
@@ -26,8 +26,8 @@ class Loader {
     /**
      * prefix module name to each api path
      */
-    _fixPath(module, moduleName){
-        module = module.forEach((api)=>{
+    _fixPath(module, moduleName) {
+        module = module.forEach((api) => {
             api.path = '/' + moduleName + api.path;
         });
         return module;
@@ -77,8 +77,10 @@ class Loader {
         this.modules.forEach((module) => {
             module.forEach((route) => {
                 let method = Util.validateMethod(route.method);
-                if (!method)return;
-                this.app[method](route.path ,route.handler)
+                if (!method) return;
+                let authMiddelware = (req, res, next) => { return next() }
+                if (route.auth) authMiddelware = this.auth.authenticate;
+                this.app[method](route.path, authMiddelware, route.handler)
             })
         })
     }
@@ -86,7 +88,8 @@ class Loader {
     /**
      * public method to apply the module(s)
      */
-    apply() {
+    apply(auth) {
+        this.auth = auth;
         if (this._init)
             this.populateModules();
         else

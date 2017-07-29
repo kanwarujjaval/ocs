@@ -17,13 +17,16 @@ class User {
     async postUser(req, res) {
         try {
             let data = req.body;
-            let result = null;
 
-            // TODO : implement auth check
-            PostOrganisationHelper._saveOrganisation(data).catch(Util.silentErrorHandler);
-            PostUserHelper._saveUser(data).catch(Util.silentErrorHandler);
+            result = await PostUserHelper._saveUser(data);
 
-            result = Util.successHandler(result);
+            /* GENERATE OTP FOR VALIDATION */
+
+            let response = {
+                userData : result
+            }
+
+            result = Util.successHandler(response);
             return res.status(result.status).send(result);
 
         } catch (e) {
@@ -57,7 +60,7 @@ class User {
     }
 
     /**
-     * 
+     * Update user end point
      * 
      * @param {Object} req 
      * @param {Object} res 

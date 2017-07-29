@@ -7,7 +7,8 @@ const common = {
     INSTANCE_ID : INSTANCE_ID,
     PORT        : 3000 + parseInt(INSTANCE_ID),
     PROCESSORS  : PROCESSORS,
-    HOSTNAME    : HOSTNAME
+    HOSTNAME    : HOSTNAME,
+    JWT_SECRET  : "sdgbkajsn2325u90jbsgjkdskjgk"
 };
 
 const specific = {
