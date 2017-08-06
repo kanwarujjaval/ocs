@@ -4,9 +4,9 @@
   "description": "ocs server",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./**/*.spec.js ./modules/**/*.spec.js -R spec",
-    "cover": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha ./**/*.spec.js ./modules/**/*.spec.js -R spec",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "mocha ./**/*.spec.js ./modules/**/*.spec.js -R spec",
+    "cover": "istanbul cover _mocha ./**/*.spec.js ./modules/**/*.spec.js",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "engines": {
     "node": ">=8.0.0"

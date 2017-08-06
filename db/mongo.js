@@ -11,7 +11,6 @@ class MongoConnection {
     constructor(config){
         this._config = config;
         this.connection = this._connect();
-        global.Mongoose = Mongoose;
     }
 
     /**
