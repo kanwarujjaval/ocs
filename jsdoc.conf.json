@@ -1,0 +1,36 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "recurseDepth": 10,
+    "opts": {
+        "template": "node_modules/tui-jsdoc-template",
+        "destination": "./docs/",
+        "recurse": true
+    },
+    "source": {
+        "exclude": [
+            "node_modules",
+            "coverage",
+            "docs"
+        ],
+        "include":["./"]
+    },
+    "plugins": [],
+    "templates": {
+        "logo": {
+            "url": "http://nhnent.github.io/tui.component.tree/latest/styles/logo.png",
+            "width": "150px",
+            "height": "13px",
+            "link": "https://github.com/nhnent/tui.jsdoc-template"
+        },
+        "name": "OCS Docs",
+        "footerText": "Copyright 2017 (c) | Vismay Studios",
+        "useCollapsibles": true,
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": true
+        }
+    }
+}

@@ -7,9 +7,9 @@ const Auth = require('./auth');
 const ENV = process.env.NODE_ENV || 'development';
 
 const app = new Express();
-const loader = new Loader(app, true, null);
 const config = new Config(ENV);
 const auth = new Auth(config);
+const loader = new Loader(app, auth, 'LOAD');
 
 (async () => {
     /* middlewares */ 
@@ -19,7 +19,7 @@ const auth = new Auth(config);
 
     let port = config.SERVER.PORT;
     await app.listen(port);
-    loader.apply(auth);
+    loader.apply();
     console.info('OCS Server started on port', port);
 
     // app.use(mysql.bootstrap());  //adds req.mysql
