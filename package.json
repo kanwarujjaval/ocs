@@ -9,7 +9,7 @@
     "lint": "eslint --fix ./",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "test:watch": "mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js -R spec --growl -w",
-    "lint:watch": "watch 'eslint --fix ./' ./",
+    "lint:watch": "watch 'eslint ./' ./",
     "dev": "parallelshell 'nodemon' 'npm run lint:watch' 'npm run test:watch'"
   },
   "engines": {
