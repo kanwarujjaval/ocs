@@ -20,7 +20,7 @@ const loader = new Loader(app, auth, 'LOAD');
     let port = config.SERVER.PORT;
     await app.listen(port);
     loader.apply();
-    console.info('OCS Server started on port', port);
+    console.info('OCS Server started on port', port); // eslint-disable-line
 
     // app.use(mysql.bootstrap());  //adds req.mysql
     // _start demonstration for the loader class

@@ -3,7 +3,9 @@ let server = require('./server');
 let mysql = require('./mysql');
 let mongo = require('./mongo');
 
-/** Config class for global Configs */
+/** 
+ * Config class for global Configs 
+ * */
 class Config {
     /**
      * create a new config
@@ -19,7 +21,7 @@ class Config {
     /**
      * Update Config with latest values in config files.
      */
-    reloadConfig () {
+    reload () {
         let server = Util.hotRequire('./server');
         this.SERVER = server(this._env);
 

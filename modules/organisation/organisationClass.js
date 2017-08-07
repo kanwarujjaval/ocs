@@ -1,16 +1,21 @@
-const UpdateOrganisationHelper = require('./helper/updateOrganisation');
-const PostOrganisationHelper = require('./helper/postOrganisation');
+const UpdateOrganisation = require('./helper/updateOrganisation');
+const PostOrganisation = require('./helper/postOrganisation');
+// const GetOrganisation = require('./helper/getOrganisation');
 const Util = require('../../utils');
 
-/** Organisation module class */
+/**
+ * Organisation module class 
+ * @extends PostOrganisation
+ * @extends GetOrganisation
+ * @extends UpdateOrganisation
+ * */
 class Organisation {
     /**
      * Saves the organisation posted by the user
      * 
-     * @param {Object} req 
-     * @param {Object} res 
-     * @returns 
-     * @memberof Organisation
+     * @param {Request} req 
+     * @param {Response} res 
+     * @returns {response} response.status().send()
      */
     async postOrganisation (req, res) {
         try {
@@ -18,7 +23,7 @@ class Organisation {
             let result = null;
 
             // TODO : implement auth check
-            result = await PostOrganisationHelper._saveOrganisation(data);
+            result = await PostOrganisation.save(data);
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);
@@ -31,10 +36,9 @@ class Organisation {
     /**
      * Updates the organisation
      * 
-     * @param {Object} req 
-     * @param {Object} res 
-     * @returns 
-     * @memberof Organisation
+     * @param {Request} req 
+     * @param {Response} res 
+     * @returns {response} response.status().send()
      */
     async updateOrganistaion (req, res) {
         try {
@@ -43,7 +47,7 @@ class Organisation {
             let result = null;
 
             // TODO : implement auth check
-            UpdateOrganisationHelper._updateOrganisation(data, criteria).catch(Util.silentErrorHandler);
+            UpdateOrganisation.update(data, criteria).catch(Util.silentErrorHandler);
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);

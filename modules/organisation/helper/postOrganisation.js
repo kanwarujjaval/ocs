@@ -1,14 +1,17 @@
 let OrganisationModel = require('../organisationModel');
-
+/**
+ * @class PostOrganisation
+ * @lends Organisation
+ */
 class PostOrganisation {
     /**
      * Function to save the organisation in db
      * 
      * @param {Object} data
-     * @returns 
+     * @returns {Array}
      * @memberof Organisation
      */
-    static _saveOrganisation (data) {
+    static save (data) {
         return new OrganisationModel(data).save();
     }
 }

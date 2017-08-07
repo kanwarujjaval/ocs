@@ -6,6 +6,7 @@ const API_PREFIX = '';
 /**
  * Loader class for module management <br/>
  * Loads/removes all modules within the modules directory and adds all routes to the express router <br/>
+ * @todo Abstraction for deletion and addition of modules <br/> Documentation of private functions
  * */
 class Loader {
     /**

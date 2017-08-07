@@ -27,10 +27,10 @@ class MongoConnection {
         if (config.DEBUG) Mongoose.set('debug', true);
         Mongoose.connect(uri, options)
             .then(() => {
-                console.info('Connection to MongoDB established');
+                console.info('Connection to MongoDB established');  // eslint-disable-line
             })
             .catch((err) => {
-                console.log('MongoDB Connection error => ', err);
+                console.log('MongoDB Connection error => ', err);   // eslint-disable-line
             });
     }
 

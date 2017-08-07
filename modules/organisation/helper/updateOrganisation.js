@@ -1,14 +1,18 @@
 let OrganisationModel = require('../organisationModel');
 
+/**
+ * @class UpdateOrganisation
+ * @lends Organisation
+ */
 class UpdateOrganisation {
     /**
      * Function to update the organisation
      * 
      * @param {Object} data
-     * @returns 
+     * @returns {Function} Organisation Model
      * @memberof Organisation
      */
-    static _updateOrganisation (data, criteria) {
+    static update (data, criteria) {
         return OrganisationModel.update(criteria, data);
     }
 }

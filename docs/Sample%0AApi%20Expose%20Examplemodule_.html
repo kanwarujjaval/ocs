@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | OCS Docs</title>
+    <title>Module: Sample
+Api Expose Example | OCS Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -45,34 +46,660 @@ Api Expose Examplemodule:_sub"><div class="member-type">Methods</div><ul class="
 
 
 
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+            
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Endpoint of the api Will be prefixed by module name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>method</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">one of 4 http verbs get/post/put/delete</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>auth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">is authentication required</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>validate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">validate input for this api path</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>roles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">array of authorized roles</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">final handler for the api path</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="~GET/sample/">
+            
+                <span class="type-signature"><span class="icon green">inner</span> </span>GET /sample/<span class="signature">(id)</span><span class="type-signature"> &rarr; {Array.&lt;{id: String, key1: String, key2: Array}>}</span>
+                
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">optional</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array.&lt;{id: String, key1: String, key2: Array}></span>
+
+
+
+
+
+- Sample Array
+
+
+
+
+            
+    </div>
+    
+
     
 
 
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>/sample/</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">GET</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Fetch and array of Sample</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
 
+<dl class="details">
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
 
 
     
 
+</dd>
 
-    <section>
-        <article class="readme"><h1>ocs</h1><p><a href="https://travis-ci.org/VismayStudios/ocs"><img src="https://travis-ci.org/VismayStudios/ocs.svg?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/github/VismayStudios/ocs?branch=master"><img src="https://coveralls.io/repos/github/VismayStudios/ocs/badge.svg?branch=master" alt="Coverage Status"></a>
-<a href="https://codeclimate.com/github/VismayStudios/ocs"><img src="https://codeclimate.com/github/VismayStudios/ocs/badges/gpa.svg" alt="Code Climate"></a>
-<a href="https://david-dm.org/VismayStudios/ocs"><img src="https://david-dm.org/VismayStudios/ocs.svg" alt="Dependency Status"></a> <a href="https://david-dm.org/VismayStudios/ocs#info=devDependencies"><img src="https://david-dm.org/VismayStudios/ocs/dev-status.svg" alt="devDependency Status"></a></p>
-<h2>todo (in this order)</h2><ul>
-<li>create config class</li>
-<li>create db class</li>
-<li>create db schema</li>
-<li>create bootsrapper class</li>
-<li>fill readme</li>
-</ul></article>
-    </section>
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="~POST/sample/">
+            
+                <span class="type-signature"><span class="icon green">inner</span> </span>POST /sample/<span class="signature">(id)</span><span class="type-signature"> &rarr; {Object.&lt;{id: String, key1: String, key2: Array}>}</span>
+                
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
 
 
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">required</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object.&lt;{id: String, key1: String, key2: Array}></span>
+
+
+
+
+
+- SAMPLE INSERTED
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>/sample/</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">POST</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">INSERT and instance of Sample</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -89,7 +716,8 @@ Api Expose Examplemodule:_sub"><div class="member-type">Methods</div><ul class="
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = 'Sample
+Api Expose Examplemodule:_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

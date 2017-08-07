@@ -10,7 +10,7 @@
     "docs": "jsdoc -c jsdoc.conf.json",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "test:watch": "mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js -R spec --growl -w",
-    "lint:watch": "onchange ./ -e docs -e logs -e uploads -- eslint ./",
+    "lint:watch": "onchange ./ -e docs -e logs -e uploads -e coverage -- eslint ./",
     "docs:watch": "onchange ./modules/ -- jsdoc -c jsdoc.conf.json",
     "dev": "parallelshell 'nodemon' 'npm run lint:watch' 'npm run test:watch' 'npm run docs:watch'"
   },

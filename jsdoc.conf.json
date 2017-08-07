@@ -12,7 +12,9 @@
         "exclude": [
             "node_modules",
             "coverage",
-            "docs"
+            "docs",
+            "logs",
+            "uploads"
         ],
         "include":["README.md","./"]
     },

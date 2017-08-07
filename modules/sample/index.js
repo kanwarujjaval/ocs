@@ -3,9 +3,7 @@ let sample = new Sample();
 
 /**
  * @module Sample
- * Sample module index expose
- * @exports {Array)
- *
+ * Api Expose Example
  * @property {String} path - Endpoint of the api Will be prefixed by module name
  * @property {String} method - one of 4 http verbs get/post/put/delete
  * @property {Boolean} auth - is authentication required
@@ -14,8 +12,13 @@ let sample = new Sample();
  * @property {function} handler - final handler for the api path
  *
  * */
-
 module.exports = [
+    /**
+     * @method GET /sample/
+     * @property {GET} /sample/ Fetch and array of Sample
+     * @param {String} id optional 
+     * @returns {Array.<{id: String, key1: String, key2: Array}>} Sample Array
+     */
     {
         path: '/',
         method: 'GET',
@@ -28,6 +31,12 @@ module.exports = [
             return sample.getSample(req, res);
         }
     },
+    /**
+     * @method POST /sample/
+     * @property {POST} /sample/ INSERT and instance of Sample
+     * @param {String} id required 
+     * @returns {Object.<{id: String, key1: String, key2: Array}>} SAMPLE INSERTED
+     */
     {
         path: '/',
         method: 'POST',

@@ -1,4 +1,3 @@
-/** Example for creating a config file */
 const common = {
 };
 

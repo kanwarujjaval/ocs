@@ -1,9 +1,18 @@
-/** the util class */
+/**
+ * @typedef {Object} Result
+ * @property {Number} status Valid HTTP Status Code
+ * @property {String} message Message String
+ * @property {Object} data The data object from the handler
+*/
+/** 
+ * The Utility Class <br/>
+ * All methods are static
+ * */
 class Util {
     /**
      * hot require a file by removing cached version
      * @param {String} filePath - Path of file to require.
-     * @static
+     * @returns {require} Required File
      */
     static hotRequire (filePath) {
         delete require.cache[require.resolve(filePath)];
@@ -13,8 +22,7 @@ class Util {
     /**
      * Validate http method verbs
      * @param {String} method - Path of file to require.
-     * @return {String} valid method in lowercase or null
-     * @static
+     * @returns {String} Valid method in lowercase or null
      */
     static validateMethod (method) {
         let _method = method.toLowerCase();
@@ -31,9 +39,9 @@ class Util {
     }
 
     /**
-     * TODO Documentation
-     * @param parallelTasks
-     * @returns {Promise}
+     * @todo Detailing
+     * @param {Array} parallelTasks Array of {Functions}
+     * @returns {Promise} Deferred Promise of all parallel tasks
      */
     static runTasksInParallel (parallelTasks) {
         return new Promise((resolve, reject) => {
@@ -50,9 +58,10 @@ class Util {
     }
 
     /**
-     * TODO Documentation
-     * @param e
-     * @returns {{status: number, message: string, data: {}}}
+     * Basic Error Handler
+     * @todo Add cases
+     * @param {Error} e Instace of Error
+     * @returns {Result} The standard Result Object
      */
     static errorHandler (e) {
         let status = 500;
@@ -76,9 +85,9 @@ class Util {
     }
 
     /**
-     * TODO Documentation
-     * @param data
-     * @returns {{status: number, message: string, data: *}}
+     * Basic Success response function
+     * @param data Data to be sent in the Data Key
+     * @returns {Result} The standard Result Object
      */
     static successHandler (data) {
         let status = 200;
