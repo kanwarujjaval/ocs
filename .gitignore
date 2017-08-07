@@ -62,3 +62,5 @@ package-lock.json
 .*
 !/.gitignore
 !/.travis.yml
+!/.eslintrc.js
+!/.eslintignore

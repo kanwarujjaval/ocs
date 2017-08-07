@@ -1,0 +1,5 @@
+logs
+lib-cov
+coverage
+build
+node_modules
