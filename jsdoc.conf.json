@@ -18,12 +18,12 @@
     },
     "plugins": [],
     "templates": {
-        // "logo": {
-        //     "url": "http://nhnent.github.io/tui.component.tree/latest/styles/logo.png",
-        //     "width": "150px",
-        //     "height": "13px",
-        //     "link": "https://github.com/nhnent/tui.jsdoc-template"
-        // },
+        "logo": {
+            "url": "https://vismaystudios.github.io/ocs/icon.png",
+            "width": "80px",
+            "height": "80px",
+            "link": "https://vismaystudios.github.io/ocs/"
+        },
         "name": "OCS Docs",
         "footerText": "Copyright 2017 (c) | Vismay Studios",
         "useCollapsibles": true,
