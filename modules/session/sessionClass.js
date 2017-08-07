@@ -1,5 +1,3 @@
-const sessionModel = require('./sessionModel');
-
 /** session module class */
 class Session {
 

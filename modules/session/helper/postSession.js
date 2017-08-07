@@ -1,4 +1,4 @@
-let sessionModel = require('../sessionModel');
+// let sessionModel = require('../sessionModel')
 
 class PostSession {
 

@@ -1,21 +1,21 @@
-const os            = require('os');
-const INSTANCE_ID   = process.env.INSTANCE_ID || 0;
-const PROCESSORS    = os.cpus().length;
-const HOSTNAME      = os.hostname();
+const os = require('os');
+const INSTANCE_ID = process.env.INSTANCE_ID || 0;
+const PROCESSORS = os.cpus().length;
+const HOSTNAME = os.hostname();
 
 const common = {
-    INSTANCE_ID : INSTANCE_ID,
-    PORT        : 3000 + parseInt(INSTANCE_ID),
-    PROCESSORS  : PROCESSORS,
-    HOSTNAME    : HOSTNAME,
-    JWT_SECRET  : "sdgbkajsn2325u90jbsgjkdskjgk"
+    INSTANCE_ID: INSTANCE_ID,
+    PORT: 3000 + parseInt(INSTANCE_ID),
+    PROCESSORS: PROCESSORS,
+    HOSTNAME: HOSTNAME,
+    JWT_SECRET: 'sdgbkajsn2325u90jbsgjkdskjgk'
 };
 
 const specific = {
-    development : {},
-    testing     : {},
-    staging     : {},
-    production  : {}
+    development: {},
+    testing: {},
+    staging: {},
+    production: {}
 };
 
 const config = (ENV) => {

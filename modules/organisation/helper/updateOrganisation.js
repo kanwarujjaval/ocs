@@ -8,9 +8,9 @@ class UpdateOrganisation {
      * @returns 
      * @memberof Organisation
      */
-    static _updateOrganisation(data, criteria) {
+    static _updateOrganisation (data, criteria) {
         return OrganisationModel.update(criteria, data);
-    };
+    }
 }
 
 module.exports = UpdateOrganisation;

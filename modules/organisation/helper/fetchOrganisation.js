@@ -1,7 +1,7 @@
-let OrganisationModel = require('../organisationModel');
+// let OrganisationModel = require('../organisationModel')
 
 class FetchOrganisation {
-    
+
 }
 
 module.exports = FetchOrganisation;

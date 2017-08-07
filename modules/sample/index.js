@@ -22,10 +22,10 @@ module.exports = [
         auth: true,
         roles: sample.getSampleRoles(),
         validate: () => {
-            return sample.getSampleValidator
+            return sample.getSampleValidator;
         },
         handler: (req, res) => {
-            return sample.getSample(req, res)
+            return sample.getSample(req, res);
         }
     },
     {
@@ -34,10 +34,10 @@ module.exports = [
         auth: true,
         roles: sample.postSampleRoles(),
         validate: () => {
-            return sample.postSampleValidator
+            return sample.postSampleValidator;
         },
         handler: (req, res) => {
-            return sample.postSample(req, res)
+            return sample.postSample(req, res);
         }
     }
 ];

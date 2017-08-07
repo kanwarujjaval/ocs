@@ -8,9 +8,9 @@ class PostUser {
      * @returns 
      * @memberof User
      */
-    static _saveUser(data) {
+    static _saveUser (data) {
         return new UserModel(data).save();
-    };
+    }
 }
 
 module.exports = PostUser;

@@ -1,23 +1,20 @@
 const fs = require('fs');
 const Util = require('./../utils');
-let MODULE_DIR = './modules/';
-let API_PREFIX = '';
+const MODULE_DIR = './modules/';
+const API_PREFIX = '';
 
 /** Loader class for module management */
 class Loader {
-
     /**
      * create a new loader
      * @param {Object} app - The express instance.
      * @param {Boolean} init - initialize all modules?.
      * @param {String} moduleName - Single module to load if init = false.
      */
-    constructor(app, init, moduleName) {
-        if (!init && !moduleName)
-            throw new Error('Invalid initialization');
+    constructor (app, init, moduleName) {
+        if (!init && !moduleName) { throw new Error('Invalid initialization'); }
         this._init = init;
-        if (moduleName && typeof moduleName === typeof 'a')
-            this._init = false;
+        if (moduleName && typeof moduleName === typeof 'a') { this._init = false; }
         this.app = app;
         this.moduleName = moduleName;
         this.modules = [];
@@ -26,7 +23,7 @@ class Loader {
     /**
      * prefix module name to each api path
      */
-    _fixPath(module, moduleName) {
+    _fixPath (module, moduleName) {
         module = module.forEach((api) => {
             api.path = '/' + moduleName + api.path;
         });
@@ -36,7 +33,7 @@ class Loader {
     /**
      * Load all modules to app
      */
-    populateModules() {
+    populateModules () {
         let moduleDirs = fs.readdirSync(MODULE_DIR);
         moduleDirs.forEach((module) => {
             let curModule = require('./../modules/' + module);
@@ -49,7 +46,7 @@ class Loader {
     /**
      * Load single module to app
      */
-    addModule() {
+    addModule () {
         let curModule = require('./../modules/' + this.moduleName);
         this.modules.push(curModule);
         this.loadModules();
@@ -60,11 +57,9 @@ class Loader {
      * @param {String} moduleName - name of module to remove.
      */
 
-    deleteModule(moduleName) {
-        if (!moduleName)
-            moduleName = this.moduleName;
-        if (!moduleName)
-            throw new Error('Invalid module removal');
+    deleteModule (moduleName) {
+        if (!moduleName) { moduleName = this.moduleName; }
+        if (!moduleName) { throw new Error('Invalid module removal'); }
         this.app._router.stack = this.app._router.stack.filter((route) => {
             return route.route ? !route.route.path.startsWith('/' + API_PREFIX + moduleName) : true;
         });
@@ -73,29 +68,25 @@ class Loader {
     /**
      * actually add modules in this.modules to the app instance
      */
-    loadModules() {
+    loadModules () {
         this.modules.forEach((module) => {
             module.forEach((route) => {
                 let method = Util.validateMethod(route.method);
                 if (!method) return;
-                let authMiddelware = (req, res, next) => { return next() }
+                let authMiddelware = (req, res, next) => { return next(); };
                 if (route.auth) authMiddelware = this.auth.authenticate;
-                this.app[method](route.path, authMiddelware, route.handler)
-            })
-        })
+                this.app[method](route.path, authMiddelware, route.handler);
+            });
+        });
     }
 
     /**
      * public method to apply the module(s)
      */
-    apply(auth) {
+    apply (auth) {
         this.auth = auth;
-        if (this._init)
-            this.populateModules();
-        else
-            this.addModule();
+        if (this._init) { this.populateModules(); } else { this.addModule(); }
     }
-
 }
 
 module.exports = Loader;

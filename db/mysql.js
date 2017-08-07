@@ -1,19 +1,18 @@
-const Mysql    = require('mysql');
+const Mysql = require('mysql');
 const Bluebird = require('bluebird');
 
 Bluebird.promisifyAll(Mysql);
-Bluebird.promisifyAll(require("mysql/lib/Connection").prototype);
-Bluebird.promisifyAll(require("mysql/lib/Pool").prototype);
+Bluebird.promisifyAll(require('mysql/lib/Connection').prototype);
+Bluebird.promisifyAll(require('mysql/lib/Pool').prototype);
 
 /** Database class for mysql Connection Handling */
 class MysqlConnection {
-
     /**
      * create a new MysqlConnection
      * @param {Object} config - Instance of Config class.
      */
-    constructor(config){
-        this._config  = config;
+    constructor (config) {
+        this._config = config;
         this.connection = this._connect();
     }
 
@@ -21,66 +20,64 @@ class MysqlConnection {
      * create a new MySql Connection Pool
      * @returns {function} that returns Mysql Connection Pool
      */
-    _connect() {
-        console.log("mysql connection creation should only be called once");
+    _connect () {
         let config = this._config.MYSQL;
         return Mysql.createPool({
-            connectionLimit     : config.CONNECTION_LIMIT,
-            host                : config.HOST,
-            user                : config.USER,
-            password            : config.PASS,
-            database            : config.DATABASE,
-            trace               : config.TRACE,
-            debug               : config.DEBUG,
-            charset             : config.CHARSET,
-            multipleStatements  : true
+            connectionLimit: config.CONNECTION_LIMIT,
+            host: config.HOST,
+            user: config.USER,
+            password: config.PASS,
+            database: config.DATABASE,
+            trace: config.TRACE,
+            debug: config.DEBUG,
+            charset: config.CHARSET,
+            multipleStatements: true
         });
-    };
+    }
 
     /**
      * Get a connection from Mysql Pool
      * @returns {function} that returns connection from pool with attached bluebird disposer
      */
-    _getMysqlConnection() {
+    _getMysqlConnection () {
         return () => {
             return this.connection.getConnectionAsync().disposer((connection) => {
                 return connection.release();
             });
-        }
-    };
+        };
+    }
 
     /**
      * Run a query on Mysql Connection
      * @returns {function} that returns query function with attached blubird using property to call disposer on use end.
      */
-    _mysqlQuery(command) {
+    _mysqlQuery (command) {     // eslint-disable-line
         return (command) => {
             return Bluebird.using(this._getMysqlConnection()(), (connection) => {
                 return connection.queryAsync(command);
             });
-        }
-    };
+        };
+    }
 
     /**
      * Middleware for Mongo Connection Function
      * @returns {function} that attaches a 'sql' function to request object which runs queries on Mysql
      */
-    bootstrap() {
+    bootstrap () {
         return (req, res, next) => {
             req.sql = (() => {
-                return this._mysqlQuery()
+                return this._mysqlQuery();
             })();
             next();
-        }
+        };
     }
 
     /**
      * Close connection end
      */
-    disconnect() {
+    disconnect () {
         return this.connection.end();
     }
-
 }
 
 module.exports = MysqlConnection;

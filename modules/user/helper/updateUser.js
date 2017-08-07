@@ -8,9 +8,9 @@ class UpdateUser {
      * @returns 
      * @memberof User
      */
-    static _updateUser(data, criteria) {
+    static _updateUser (data, criteria) {
         return UserModel.update(criteria, data);
-    };
+    }
 }
 
 module.exports = UpdateUser;

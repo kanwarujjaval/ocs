@@ -10,8 +10,8 @@ const organisationSchema = new Schema({
     country: { type: String, required: true },
     registeredBy: { type: Schema.Types.ObjectId, required: true }
 }, {
-        timestamps: true
-    });
+    timestamps: true
+});
 
 let organisationModel = Mongoose.model('organisation', organisationSchema);
 

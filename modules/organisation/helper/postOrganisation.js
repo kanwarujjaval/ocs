@@ -8,9 +8,9 @@ class PostOrganisation {
      * @returns 
      * @memberof Organisation
      */
-    static _saveOrganisation(data) {
-            return new OrganisationModel(data).save();
-    };
+    static _saveOrganisation (data) {
+        return new OrganisationModel(data).save();
+    }
 }
 
 module.exports = PostOrganisation;

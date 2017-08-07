@@ -1,5 +1,5 @@
-const Organisation  = require('./organisationClass');
-let organisation    = new Organisation();
+const Organisation = require('./organisationClass');
+let organisation = new Organisation();
 
 module.exports = [
     {
@@ -8,7 +8,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            return organisation.postOrganisation(req, res)
+            return organisation.postOrganisation(req, res);
         }
     },
     {
@@ -17,7 +17,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            return organisation.updateOrganistaion(req, res)
+            return organisation.updateOrganistaion(req, res);
         }
     }
 ];

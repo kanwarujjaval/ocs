@@ -8,7 +8,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            return user.postUser(req, res)
+            return user.postUser(req, res);
         }
     },
     {
@@ -17,7 +17,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            return user.getUser(req, res)
+            return user.getUser(req, res);
         }
     },
     {
@@ -26,7 +26,7 @@ module.exports = [
         auth: false,
         roles: [],
         handler: (req, res) => {
-            return user.updateUser(req, res)
+            return user.updateUser(req, res);
         }
     }
 ];

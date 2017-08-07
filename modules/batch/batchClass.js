@@ -1,5 +1,3 @@
-const batchModel = require('./batchModel');
-
 /** batch module class */
 class Batch {
 
