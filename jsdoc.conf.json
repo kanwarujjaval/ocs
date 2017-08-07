@@ -14,7 +14,7 @@
             "coverage",
             "docs"
         ],
-        "include":["./"]
+        "include":["README.md","./"]
     },
     "plugins": [],
     "templates": {
@@ -27,10 +27,10 @@
         "name": "OCS Docs",
         "footerText": "Copyright 2017 (c) | Vismay Studios",
         "useCollapsibles": true,
-        "cleverLinks": false,
+        "cleverLinks": true,
         "monospaceLinks": false,
         "default": {
-            "outputSourceFiles": true
+            "outputSourceFiles": false
         }
     }
 }
