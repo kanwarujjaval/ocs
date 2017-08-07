@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kanwarujjaval/ocs.git"
+    "url": "git+https://github.com/VismayStudios/ocs.git"
   },
   "author": "VS",
   "license": "AGPL-3.0",
@@ -28,9 +28,9 @@
     "Priskhit Tekta"
   ],
   "bugs": {
-    "url": "https://github.com/kanwarujjaval/ocs/issues"
+    "url": "https://github.com/VismayStudios/ocs/issues"
   },
-  "homepage": "https://github.com/kanwarujjaval/ocs#readme",
+  "homepage": "https://vismaystudios.github.io/ocs/",
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
