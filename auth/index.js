@@ -1,71 +1,71 @@
 const jsonwebtoken = require('jsonwebtoken');
-const UserFetchHelper = require('../modules/user/helper/fetchUser');
+const Session = require('./sessionModel');
+const User = require('../modules/user/userModel');
 const Util = require('../utils');
 
-/*
-
-require user Class USER
-
-*/
-
-/** Main Auth class for Authentication */
+/** 
+ * Main Auth class for Authentication 
+ * */
 class Auth {
     /**
-     * create a new Authentication Object
+     * create a new Auth Object
+     * 
      * @param {Object} config - Instance of Config class.
      */
-    constructor (config) {
+    constructor(config) {
         this._config = config;
-        this.user = null;
-        this.authData = null;
+        this.sessionId = null;
     }
 
-    _generateToken (data) {
-        let payload = {
-            userId: data._id
-        };
-        let token = jsonwebtoken.sign(payload, this._config.SERVER.JWT_SECRET);
-        return token;
+    /**
+     * generates an access token for a session id
+     * 
+     * @param {String} sessionId 
+     * @returns {String} accessToken
+     */
+    generateToken(sessionId) {
+        return jsonwebtoken.sign(sessionId, this._config.SERVER.JWT_SECRET);
     }
 
-    _authenticate () {
-        let token = this._generateToken(this.user);
-        this.authData = {
-            token: token,
-            sessionStart: Date.now()
-        };
+    /**
+     * validate a session Id
+     *
+     * @returns {Object} valid session Object
+     * @memberof Auth
+     */
+    async validate() {
+        let session = await Session.find(
+            { _id: this.sessionId, valid: true },
+            { createdAt: -1, limit: 1 },
+            { lean: true }
+        );
+        if (session.length) {
+            return session[0];
+        }
+        throw new Error('Session does not exist');
     }
 
-    _authorize () {
-
-    }
-
-    _serialize () {
-        let user = this.user;
-        // delete non required fields
-        user.authData = this.authData;
-        return user; // jo database se niklega
-    }
-
-    _deserialize () {
-        return null; // ya id req.auth = null
-    }
-
-    authenticate () {
+    authenticate() {
         return (req, res, next) => {
             return async () => {
                 try {
-                    let criteria = {
-                        phoneNo: req.body.phoneNo,
-                        password: req.body.password
-                    };
-
-                    let User = await UserFetchHelper._fetchUser(criteria);
-                    this.user = User;
-                    this._authenticate();
-
-                    req.auth = this.authData;
-                    next();
+                    let accessToken = req.get('authorization');
+                    this.sessionId = jsonwebtoken.verify(accessToken, this._config.SERVER.JWT_SECRET);
+                    let session = this.validate();
+                    let user = await User.find(
+                        { _id: session.userId },
+                        { password: 0 },
+                        { lean: true }
+                    );
+                    if (user.length) {
+                        req.auth = {
+                            user: user[0],
+                            token: accessToken,
+                            session: session
+                        };
+                        next();
+                    }
+                    throw new Error('Unable to find user');
                 } catch (error) {
                     let result = Util.errorHandler(error);
                     return res.status(result.status).send(result);
@@ -74,14 +74,43 @@ class Auth {
         };
     }
 
-    logout () {
-    // set session as invalidated in db
-    // set device specific data as logged out
+    /**
+     * create a new session for a user
+     * 
+     * @param {ObjectId} sessionData.userId
+     * @param {String} sessionData.deviceId
+     * @param {String} sessionData.deviceToken
+     * @param {String} sessionData.deviceType
+     * @returns {String} accessToken
+     */
+    async createSession(sessionData) {
+        let session = await new Session(sessionData).save();
+        let token = this.generateToken(session._id);
+        return token;
+    }
+
+    /**
+     * Logout a session
+     *
+     */
+    logout() {
         return (req, res, next) => {
-            req.auth = (() => {
-                return this._deserializeUser();
-            })();
-            next();
+            return () => {
+                let accessToken = req.get('authorization');
+                let sessionId = jsonwebtoken.verify(accessToken, this._config.SERVER.JWT_SECRET);
+                Session.findOneAndUpdate(
+                    { _id: sessionId },
+                    {
+                        $set: {
+                            valid: false,
+                            invalidedAt: Date.now
+                        }
+                    },
+                    { new: true, lean: true }
+                );
+                req.auth = null;
+                next();
+            }
         };
     }
 }
