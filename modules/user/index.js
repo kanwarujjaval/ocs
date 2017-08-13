@@ -2,42 +2,40 @@ const User = require('./userClass');
 let user = new User();
 
 /**
- * @module 
- * [Core] User Module
- * @property {String} path - Endpoint of the api Will be prefixed by module name
- * @property {String} method - one of 4 http verbs get/post/put/delete
- * @property {Boolean} auth - is authentication required
- * @property {function} validate - validate input for this api path
- * @property {Array} roles - array of authorized roles
- * @property {function} handler - final handler for the api path
- *
+ * User Module
+ * @module [Core]/User
  * */
 module.exports = [
+    /**
+     * @method Login
+     * @description  GET user/login
+     * @param {Number} phoneNo - Users phone number (required)
+     * @param {String} password - Users password (optional)
+     * @param {String} password - Users password (optional)
+     * @return {Object} User data and access token
+     * @example
+     * {
+        accessToken: { type: String },
+        user: {
+            firstName: { type: String, required: true },
+            middleName: { type: String, default: null },
+            lastName: { type: String, required: true },
+            phoneNo: { type: String, required: true },
+            email: { type: String, required: true },
+            address1: { type: String, default: null },
+            address2: { type: String, default: null },
+            city: { type: String, default: null },
+            country: { type: String, required: true }
+        }
+    }
+     */
     {
-        path: '/',
+        path: '/login',
         method: 'POST',
         auth: false,
-        roles: [],
+        roles: ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'],
         handler: (req, res) => {
-            return user.postUser(req, res);
-        }
-    },
-    {
-        path: '/',
-        method: 'GET',
-        auth: false,
-        roles: [],
-        handler: (req, res) => {
-            return user.getUser(req, res);
-        }
-    },
-    {
-        path: '/',
-        method: 'PUT',
-        auth: false,
-        roles: [],
-        handler: (req, res) => {
-            return user.updateUser(req, res);
+            return user.login(req, res);
         }
     }
 ];
