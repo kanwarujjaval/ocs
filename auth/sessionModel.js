@@ -7,19 +7,26 @@ const sessionSchema = new Schema(
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'user',
-            require : [true, 'Provide user Id for session']
+            require: [true, 'Provide user Id for session'],
+            index: true
         },
         valid: {
             type: Boolean,
             default: true,
+            index: true
         },
         invalidedAt: {
             type: Date,
             default: null
         },
-        deviceId: {
+        ip: {
             type: String,
             default: null
+        },
+        deviceId: {
+            type: String,
+            default: null,
+            index: true
         },
         deviceToken: {
             type: String,

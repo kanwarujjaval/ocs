@@ -9,6 +9,8 @@ const Util = require('../utils');
 class Auth {
     /**
      * create a new Auth Object
+     * sets config for the instance
+     * sets sessiodId for the instance
      * 
      * @param {Object} config - Instance of Config class.
      */
@@ -31,7 +33,7 @@ class Auth {
      * validate a session Id
      *
      * @returns {Object} valid session Object
-     * @memberof Auth
+     * @throws {Error} Session does not exist if no session found
      */
     async validate() {
         let session = await Session.find(
@@ -45,6 +47,11 @@ class Auth {
         throw new Error('Session does not exist');
     }
 
+    /**
+     * Authenticate middleware to be used within routes
+     * 
+     * @returns {Function} Middleware which accepts binding of request, response and next callbacks
+     */
     authenticate() {
         return (req, res, next) => {
             return async () => {
@@ -77,10 +84,11 @@ class Auth {
     /**
      * create a new session for a user
      * 
-     * @param {ObjectId} sessionData.userId
-     * @param {String} sessionData.deviceId
-     * @param {String} sessionData.deviceToken
-     * @param {String} sessionData.deviceType
+     * @param {ObjectId} sessionData.userId User Id
+     * @param {String} sessionData.deviceId Unique device Id
+     * @param {String} sessionData.deviceToken Device Token
+     * @param {String} sessionData.deviceType Device type [IOS, ANDROID, WEB]
+     * @param {String} sessionData.ip Ip address of request
      * @returns {String} accessToken
      */
     async createSession(sessionData) {
@@ -90,16 +98,18 @@ class Auth {
     }
 
     /**
-     * Logout a session
-     *
+     * Destroy session(s)
+     * request must be authenticated before calling logout
+     * 
+     * @param {boolean} [allDevices=false] logout user from all sessions
+     * @returns {Function} express middleware/handler
      */
-    logout() {
+    logout(flushAll = false) {
         return (req, res, next) => {
             return () => {
-                let accessToken = req.get('authorization');
-                let sessionId = jsonwebtoken.verify(accessToken, this._config.SERVER.JWT_SECRET);
+                let query = flushAll ? { userId: req.auth.user._id } : { _id: req.auth.session._id };
                 Session.findOneAndUpdate(
-                    { _id: sessionId },
+                    query,
                     {
                         $set: {
                             valid: false,
@@ -110,7 +120,7 @@ class Auth {
                 );
                 req.auth = null;
                 next();
-            }
+            };
         };
     }
 }
