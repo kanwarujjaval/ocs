@@ -2,8 +2,8 @@ const Sample = require('./sample');
 let sample = new Sample();
 
 /**
- * @module Sample
- * Api Expose Example
+ * @module
+ * Sample Module
  * @property {String} path - Endpoint of the api Will be prefixed by module name
  * @property {String} method - one of 4 http verbs get/post/put/delete
  * @property {Boolean} auth - is authentication required

@@ -1,5 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
-const Session = require('./sessionModel');
+const AuthSession = require('./authSessionModel');
 const User = require('../modules/user/userModel');
 const Util = require('../utils');
 
@@ -10,41 +10,41 @@ class Auth {
     /**
      * create a new Auth Object
      * sets config for the instance
-     * sets sessiodId for the instance
+     * sets authSessionId for the instance
      * 
      * @param {Object} config - Instance of Config class.
      */
     constructor(config) {
         this._config = config;
-        this.sessionId = null;
+        this.authSessionId = null;
     }
 
     /**
-     * generates an access token for a session id
+     * generates an access token for a authSessionId id
      * 
-     * @param {String} sessionId 
+     * @param {String} authSessionId authSessionId from mongo authSession collection
      * @returns {String} accessToken
      */
-    generateToken(sessionId) {
-        return jsonwebtoken.sign(sessionId, this._config.SERVER.JWT_SECRET);
+    generateToken(authSessionId) {
+        return jsonwebtoken.sign(authSessionId, this._config.SERVER.JWT_SECRET);
     }
 
     /**
-     * validate a session Id
+     * validate a authSessionId Id
      *
-     * @returns {Object} valid session Object
-     * @throws {Error} Session does not exist if no session found
+     * @returns {Object} valid authSession Object
+     * @throws {Error} AuthSession does not exist {if no authSession found}
      */
     async validate() {
-        let session = await Session.find(
-            { _id: this.sessionId, valid: true },
+        let authSession = await AuthSession.find(
+            { _id: this.authSessionId, valid: true },
             { createdAt: -1, limit: 1 },
             { lean: true }
         );
-        if (session.length) {
-            return session[0];
+        if (authSession.length) {
+            return authSession[0];
         }
-        throw new Error('Session does not exist');
+        throw new Error('AuthSession does not exist');
     }
 
     /**
@@ -57,10 +57,10 @@ class Auth {
             return async () => {
                 try {
                     let accessToken = req.get('authorization');
-                    this.sessionId = jsonwebtoken.verify(accessToken, this._config.SERVER.JWT_SECRET);
-                    let session = this.validate();
+                    this.authSessionId = jsonwebtoken.verify(accessToken, this._config.SERVER.JWT_SECRET);
+                    let authSession = this.validate();
                     let user = await User.find(
-                        { _id: session.userId },
+                        { _id: authSession.userId },
                         { password: 0 },
                         { lean: true }
                     );
@@ -68,7 +68,7 @@ class Auth {
                         req.auth = {
                             user: user[0],
                             token: accessToken,
-                            session: session
+                            authSession: authSession
                         };
                         next();
                     }
@@ -82,33 +82,33 @@ class Auth {
     }
 
     /**
-     * create a new session for a user
+     * create a new authSession for a user
      * 
-     * @param {ObjectId} sessionData.userId User Id
-     * @param {String} sessionData.deviceId Unique device Id
-     * @param {String} sessionData.deviceToken Device Token
-     * @param {String} sessionData.deviceType Device type [IOS, ANDROID, WEB]
-     * @param {String} sessionData.ip Ip address of request
+     * @param {ObjectId} authSessionData.userId User Id
+     * @param {String} authSessionData.deviceId Unique device Id
+     * @param {String} authSessionData.deviceToken Device Token
+     * @param {String} authSessionData.deviceType Device type [IOS, ANDROID, WEB]
+     * @param {String} authSessionData.ip Ip address of request
      * @returns {String} accessToken
      */
-    async createSession(sessionData) {
-        let session = await new Session(sessionData).save();
-        let token = this.generateToken(session._id);
+    async createAuthSession(authSessionData) {
+        let authSession = await new AuthSession(authSessionData).save();
+        let token = this.generateToken(authSession._id);
         return token;
     }
 
     /**
-     * Destroy session(s)
+     * Destroy authSession(s)
      * request must be authenticated before calling logout
      * 
-     * @param {boolean} [allDevices=false] logout user from all sessions
+     * @param {boolean} flushAll logout user from all authSessions
      * @returns {Function} express middleware/handler
      */
     logout(flushAll = false) {
         return (req, res, next) => {
             return () => {
-                let query = flushAll ? { userId: req.auth.user._id } : { _id: req.auth.session._id };
-                Session.findOneAndUpdate(
+                let query = flushAll ? { userId: req.auth.user._id } : { _id: req.auth.authSession._id };
+                AuthSession.findOneAndUpdate(
                     query,
                     {
                         $set: {

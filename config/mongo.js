@@ -3,7 +3,7 @@ const common = {
     USER: process.env.MONGO_USER || '',
     PASS: process.env.MONGO_PASS || '',
     PORT: process.env.MONGO_PORT || 27017,
-    DATABASE: process.env.MONGO_DB || 'OCS'
+    DATABASE: process.env.MONGO_DB || 'ocs'
 };
 
 const specific = {
