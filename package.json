@@ -9,10 +9,10 @@
     "lint": "eslint --fix ./",
     "docs": "jsdoc -c jsdoc.conf.json",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "test:watch": "mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js -R spec --growl -w",
+    "test:watch": "mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js -R spec -w",
     "lint:watch": "onchange ./ -e docs -e logs -e uploads -e coverage -- eslint ./",
     "docs:watch": "onchange ./modules/ -- jsdoc -c jsdoc.conf.json",
-    "dev": "parallelshell 'nodemon' 'npm run lint:watch' 'npm run test:watch' 'npm run docs:watch'"
+    "dev": "parallelshell 'nodemon' 'npm run lint:watch' 'npm run test:watch'"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -21,11 +21,20 @@
     "type": "git",
     "url": "git+https://github.com/VismayStudios/ocs.git"
   },
-  "author": "VS",
+  "author" :{
+    "name": "Vismay Studios",
+    "url": "vismaystudios.org"
+  },
   "license": "AGPL-3.0",
   "contributors": [
-    "Kanwar Ujjaval Singh",
-    "Priskhit Tekta"
+    {
+      "name": "Kanwar Ujjaval Singh",
+      "email": "ujjavalkanwar@gmail.com"
+    },
+    {
+      "name": "Prikshit Tekta",
+      "email": "prikshittekta@gmail.com"
+    }
   ],
   "bugs": {
     "url": "https://github.com/VismayStudios/ocs/issues"
