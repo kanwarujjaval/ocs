@@ -65,3 +65,5 @@ package-lock.json
 !/.eslintrc.js
 !/.eslintignore
 uploads
+
+docs
