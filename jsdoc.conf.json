@@ -5,7 +5,7 @@
     "recurseDepth": 10,
     "opts": {
         "template": "node_modules/tui-jsdoc-template",
-        "destination": "./docs/",
+        "destination": "./../ocs_web/docs",
         "recurse": true
     },
     "source": {
