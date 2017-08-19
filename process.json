@@ -1,0 +1,16 @@
+{
+  "apps" : [{
+    "name"        : "ocs",
+    "script"      : "./index.js",
+    "watch"       : false,
+    "wait_ready"  : true,
+    "out_file"    : "/dev/null",
+    "error_file"  : "/dev/null",
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "env_production" : {
+       "NODE_ENV": "production"
+    }
+  }]
+}
