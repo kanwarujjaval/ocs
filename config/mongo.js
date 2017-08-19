@@ -20,7 +20,7 @@ const specific = {
         DEBUG: true
     },
     production: {
-        POOL_SIZE: 12,
+        POOL_SIZE: 10,
         DEBUG: false
     }
 };

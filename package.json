@@ -4,6 +4,7 @@
   "description": "ocs server",
   "main": "index.js",
   "scripts": {
+    "start":"pm2 startOrReload process.json --env production --update-env",
     "test": "mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js -R spec",
     "cover": "istanbul cover _mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js",
     "lint": "eslint --fix ./",
@@ -15,13 +16,13 @@
     "dev": "parallelshell 'nodemon' 'npm run lint:watch' 'npm run test:watch'"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.3.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VismayStudios/ocs.git"
   },
-  "author" :{
+  "author": {
     "name": "Vismay Studios",
     "url": "vismaystudios.org"
   },
