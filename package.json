@@ -4,7 +4,7 @@
   "description": "ocs server",
   "main": "index.js",
   "scripts": {
-    "start":"pm2 startOrReload process.json --env production --update-env",
+    "start": "pm2 startOrReload process.json --env production --update-env",
     "test": "mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js -R spec",
     "cover": "istanbul cover _mocha ./*/tests/*.spec.js ./modules/*/tests/*.spec.js",
     "lint": "eslint --fix ./",

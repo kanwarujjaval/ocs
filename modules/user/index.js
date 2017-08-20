@@ -37,5 +37,15 @@ module.exports = [
         handler: (req, res) => {
             return user.login(req, res);
         }
+    },
+
+    {
+        path: '/',
+        method: 'GET',
+        auth: false,
+        roles: [],
+        handler: (req, res) => {
+            return user.getUser(req, res);
+        }
     }
 ];

@@ -3,6 +3,7 @@ const Loader = require('./loader');
 const Config = require('./config');
 const bodyParser = require('body-parser');
 const Auth = require('./auth');
+const MongoDb = require('./db/mongo');
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -10,6 +11,7 @@ const app = new Express();
 const config = new Config(ENV);
 const auth = new Auth(config);
 const loader = new Loader(app, auth, 'LOAD');
+const mongo = new MongoDb(config);
 
 (async () => {
     /* middlewares */ 

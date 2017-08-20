@@ -7,7 +7,8 @@ const subjectSchema = new Schema({
     books: [{
         title: { type: String, required: true },
         author: { type: String, required: true }
-    }]
+    }],
+    organisationId: { type: Schema.Types.ObjectId },    
 }, {
     timestamps: true
 });
