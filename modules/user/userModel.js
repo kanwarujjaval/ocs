@@ -3,21 +3,17 @@ const Schema = Mongoose.Schema;
 const validRoles = ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'];
 
 const studentSchema = new Schema({
-    organisationId: { type: Schema.Types.ObjectId },
+    organisationId: { type: Schema.Types.ObjectId, ref: 'organisation', required: true },
     rollNo: { type: String, required: true }
 });
 
 const facultySchema = new Schema({
-    organisationId: { type: Schema.Types.ObjectId },
+    organisationId: { type: Schema.Types.ObjectId, ref: 'organisation', required: true },
     specialization: { type: String, required: true }
 });
 
 const parentSchema = new Schema({
-    children: [{
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
-    }]
+    children: [{ type: Schema.Types.ObjectId, ref: 'user', required: true }]
 });
 
 const userSchema = new Schema(
