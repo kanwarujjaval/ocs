@@ -7,6 +7,23 @@ let user = new User();
  * */
 module.exports = [
     /**
+     * @method Signup
+     * @description  GET user/signup
+     * @param {Number} phoneNo - Users phone number (required)
+     * @param {String} password - Users password (required)
+     * @return {Object} 
+     */
+    {
+        path: '/signup',
+        method: 'POST',
+        auth: false,
+        roles: ['ADMIN'],       //only admin signup allowed
+        handler: (req, res) => {
+            return user.signUp(req, res);
+        }
+    },
+
+    /**
      * @method Login
      * @description  GET user/login
      * @param {Number} phoneNo - Users phone number (required)
@@ -33,19 +50,9 @@ module.exports = [
         path: '/login',
         method: 'POST',
         auth: false,
-        roles: ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'],
+        roles: ['ADMIN', 'FACULTY', 'PARENT', 'STUDENT', 'STAFF'],
         handler: (req, res) => {
             return user.login(req, res);
-        }
-    },
-
-    {
-        path: '/',
-        method: 'GET',
-        auth: false,
-        roles: [],
-        handler: (req, res) => {
-            return user.getUser(req, res);
         }
     }
 ];

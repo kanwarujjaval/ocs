@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
-const validRoles = ['ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'STAFF'];
+const validRoles = ['ADMIN', 'FACULTY', 'PARENT', 'STUDENT', 'STAFF'];
 
 const studentSchema = new Schema({
     organisationId: { type: Schema.Types.ObjectId, ref: 'organisation', required: true },
@@ -9,11 +9,16 @@ const studentSchema = new Schema({
 
 const facultySchema = new Schema({
     organisationId: { type: Schema.Types.ObjectId, ref: 'organisation', required: true },
-    specialization: { type: String, required: true }
+    specialization: { type: String, required: true },
+    designation: { type: String, required: true }
 });
 
 const parentSchema = new Schema({
     children: [{ type: Schema.Types.ObjectId, ref: 'user', required: true }]
+});
+
+const staffSchema = new Schema({
+    designation: { type: String, required: true }
 });
 
 const userSchema = new Schema(
@@ -33,7 +38,7 @@ const userSchema = new Schema(
                 validator: function (v) {
                     let isValid = 1;
                     v.map((role) => {
-                        isValid *= validRoles.indexOf(role) > -1 ? 1 : 0;
+                        isValid *= validRoles.indexOf(role.toUpperCase()) > -1 ? 1 : 0;
                     });
                     return v.length > 0 && isValid;
                 },
@@ -43,6 +48,7 @@ const userSchema = new Schema(
         },
         studentData: { type: studentSchema, required: false },
         facultyData: { type: facultySchema, required: false },
+        staffData: { type: staffSchema, required: false },
         parentData: { type: parentSchema, required: false }
     }, {
         timestamps: true

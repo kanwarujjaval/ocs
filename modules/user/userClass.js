@@ -1,24 +1,74 @@
 const Util = require('./../../utils');
 const UserModel = require('./userModel');
+const LoginHelper = require('./helper/loginHelper');
+const UserConfig = new (require('./config'))();
 
 /**
  *  User module class 
  * */
 class User {
     /**
-     * POST users end point
+     * User signup end point
      * 
      * @param {Object} req
      * @param {Object} res
      * @returns {response}
      */
-    async postUser(req, res) {
+    async signUp(req, res) {
         try {
             let data = req.body;
 
             let result = await new UserModel(data).save();
 
-            /* TODO GENERATE OTP FOR VALIDATION */
+            /*
+                TODO - 
+            
+                1. USER VERIFICATION FLAG DEFAULTS TO ZERO AND AFTER PHONE VERIFICATION OR EMAIL VERIFICATION,
+                CHANGE THE FLAG TO 1.
+
+                2. SEND OTP / EMAIL TO THE USER 
+                     
+            */
+            let response = {
+                userData: result
+            };
+
+            result = Util.successHandler(response);
+            return res.status(result.status).send(result);
+        } catch (e) {
+            let result = Util.errorHandler(e);
+            return res.status(result.status).send(result);
+        }
+    }
+
+    /**
+     * User login end point
+     * 
+     * @param {Object} req
+     * @param {Object} res
+     * @returns {response}
+     */
+    async login(req, res) {
+        try {
+
+            let dataWrapper = {
+                body: req.body,
+                userAuthData: req.authData
+            };
+
+            if (dataWrapper.body.loginType == UserConfig.LOGIN_TYPES.PHONE_OTP) {
+                await LoginHelper.VerifyUserUsingOtp(dataWrapper);
+            } else if (dataWrapper.body.loginType == UserConfig.LOGIN_TYPES.PHONE_PASSWORD) {
+                await LoginHelper.VerifyUserUsingPasswordAndPhone(dataWrapper);
+            } else if (dataWrapper.body.loginType == UserConfig.LOGIN_TYPES.EMAIL_PASSWORD) {
+                await LoginHelper.VerifyUserUsingPasswordAndEmail(dataWrapper);
+            } else if (dataWrapper.body.loginType == UserConfig.LOGIN_TYPES.ACCESS_TOKEN) {
+                await LoginHelper.VerifyUserUsingAccessToken(dataWrapper);
+            } else {
+                throw (new Error('Login type not defined'));
+            }
+
+            let result = await LoginHelper.LoginTheUser(dataWrapper);
 
             let response = {
                 userData: result
