@@ -1,11 +1,9 @@
-const UpdateOrganisation = require('./helper/updateOrganisation');
-const PostOrganisation = require('./helper/postOrganisation');
-// const GetOrganisation = require('./helper/getOrganisation');
+const OrganisationModel = require('./organisationModel');
 const Util = require('../../utils');
 
 /**
  * Organisation module class 
- * @extends PostOrganisation
+ * @extends AddOrganisation
  * @extends GetOrganisation
  * @extends UpdateOrganisation
  * */
@@ -17,13 +15,13 @@ class Organisation {
      * @param {Response} res 
      * @returns {response} response.status().send()
      */
-    async postOrganisation (req, res) {
+    async addOrganisation (req, res) {
         try {
             let data = req.body;
             let result = null;
 
             // TODO : implement auth check
-            result = await PostOrganisation.save(data);
+            result = await new OrganisationModel(data).save();
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);
@@ -47,7 +45,7 @@ class Organisation {
             let result = null;
 
             // TODO : implement auth check
-            UpdateOrganisation.update(data, criteria).catch(Util.silentErrorHandler);
+            OrganisationModel.update(criteria, data).catch(Util.silentErrorHandler);
 
             result = Util.successHandler(result);
             return res.status(result.status).send(result);

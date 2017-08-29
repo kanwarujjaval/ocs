@@ -3,12 +3,12 @@ let organisation = new Organisation();
 
 module.exports = [
     {
-        path: '/',
+        path: '/add_organisation',
         method: 'POST',
         auth: false,
-        roles: [],
+        roles: ['ADMIN'],
         handler: (req, res) => {
-            return organisation.postOrganisation(req, res);
+            return organisation.addOrganisation(req, res);
         }
     },
     {
