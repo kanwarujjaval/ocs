@@ -1,9 +1,8 @@
-const UserModel = require('../userModel');
-const SessionModel = require('../../session/sessionModel');
+const SessionModel = require('../sessionModel');
 const BatchModel = require('../../batch/batchModel');
 
-class FacultyHelper {
-    static fetchSessionData(dataWrapper) {
+class SessionData {
+    static fetchFacultySessionData(dataWrapper) {
         return new Promise((resolve, reject) => {
             (async () => {
                 try {
@@ -58,6 +57,20 @@ class FacultyHelper {
             })();
         });
     }
+
+    static fetchSessionData(dataWrapper) {
+        return new Promise((resolve, reject) => {
+            (async () => {
+                try {
+
+                    
+                    resolve();
+                } catch (err) {
+                    reject(err);
+                }
+            })();
+        });
+    }
 }
 
-module.exports = FacultyHelper;
+module.exports = SessionData;

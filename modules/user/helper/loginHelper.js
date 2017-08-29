@@ -1,8 +1,5 @@
-const FacultyHelper = require('./facultyHelper');
-const ParentHelper = require('./parentHelper');
-const StaffHelper = require('./staffHelper');
-const StudentHelper = require('./studentHelper');
-const AdminHelper = require('./adminHelper');
+const UserModel = require('../userModel');
+const SessionHelper = require('../../session/helper/sessionData');
 
 class LoginHelper {
     static VerifyUserUsingOtp(data) {
@@ -34,6 +31,44 @@ class LoginHelper {
         */
     }
 
+    static parentLoginData(dataWrapper) {
+        return new Promise((resolve, reject) => {
+            (async () => {
+                try {
+
+                    /* 
+                        TODO -
+                        dataWrapper.authUserData._id has to come from auth
+                    
+                    */
+                    let children = await UserModel.find({_id: dataWrapper.authUserData._id});
+                    let childrenData = await UserModel.find({_id : {$in : children[0].parentData.childern}});
+
+                    /* Send only the children data to the app, there will be serapate api to fetch session data */
+
+                    resolve(childrenData);
+                } catch (err) {
+                    reject(err);
+                }
+            })();
+        });
+    }
+
+    static facultyLoginData(dataWrapper) {
+        return new Promise((resolve, reject) => {
+            (async () => {
+                try {
+                    
+                    let data = await SessionHelper.fetchFacultySessionData(dataWrapper);
+                    
+                    resolve(data);
+                } catch (err) {
+                    reject(err);
+                }
+            })();
+        });
+    }
+
     static LoginTheUser(dataWrapper) {
         return new Promise((resolve, reject) => {
             (async () => {
@@ -53,23 +88,20 @@ class LoginHelper {
                     };
 
                     if (dataWrapper.userAuthData.role == 'PARENT') {
-                        let data = await ParentHelper.fetchSessionData(dataWrapper);
+                        let data = await this.parentLoginData(dataWrapper);
                         responseWrapper.parent = data;
                     } else if (dataWrapper.userAuthData.role == 'FACULTY') {
-                        let data = await FacultyHelper.fetchSessionData(dataWrapper);
+                        let data = await this.facultyLoginData(dataWrapper);
                         responseWrapper.faculty = data;
                     } else if (dataWrapper.userAuthData.role == 'STAFF') {
-                        let data = await StaffHelper.fetchSessionData(dataWrapper);
-                        responseWrapper.staff = data;
+                        /* Staff login data */
                     } else if (dataWrapper.userAuthData.role == 'STUDENT') {
-                        let data = await StudentHelper.fetchSessionData(dataWrapper);
-                        responseWrapper.student = data;
+                        /* Student login data */
                     } else if (dataWrapper.userAuthData.role == 'ADMIN') {
-                        let data = await AdminHelper.fetchSessionData(dataWrapper);
-                        responseWrapper.admin = data;
+                        /* Admin login data */
                     }
 
-                    resolve(PaymentResponse);
+                    resolve(responseWrapper);
                 } catch (err) {
                     reject(err);
                 }
